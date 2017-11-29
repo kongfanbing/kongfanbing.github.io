@@ -1,0 +1,82 @@
+---
+layout: post
+title:  php安装扩展phpredis
+date:   2016-09-22 14:17:00 +0800
+categories: php redis
+---
+
+>  温故而知新，~~可以为师矣~~
+>
+> ——孔子
+
+写在前面的话：
+
+<u>这一篇本来是要介绍redis的使用，不过在整理文档的时候，想起很多新手不知道如何安装php扩展，他们总是被版本号搞的焦头烂额，所以最终php安装扩展的说明占了很大篇幅。</u>
+
+
+
+phpredis在php的官方地址<https://pecl.php.net/package/redis>
+
+linux下可以使用pecl命令安装：
+
+```
+pecl install redis
+```
+
+安装的时候需要注意PHP的版本号。
+
+phpredis最新版3.0.0最低支持PHP7.0，如果小于7.0的PHP，安装的时候还需要选择版本号，不然会提示找不到扩展：
+
+```
+pecl install redis-2.2.8
+```
+
+windows下安装如果要使用pecl的话，还要注意版本号，phpredis的2.2.7和3.0.0才支持windows。
+
+windows下如果不能使用pecl安装，就要下载dll文件手动放到PHP扩展目录。
+
+需要选择phpredis-2.2.7，找到对应的下载包，比如[5.6 Non Thread Safe (NTS) x64](http://windows.php.net/downloads/pecl/releases/redis/2.2.7/php_redis-2.2.7-5.6-nts-vc11-x64.zip)。
+
+这里5.6就是php的版本了，目前大部分的扩展都只会支持到PHP5.3，甚至是5.4，所以开新项目且代码复用较低时，还是要安装教新版本的PHP，比如当前PHP5.6.26就是比较好的选择，如果旧项目需要升级PHP版本，可以参考PHP官方手册的移植教程，比如5.5.x升级5.6.x <http://php.net/manual/zh/migration56.php>。
+
+Non Thread Safe（NTS）顾名思义是非线程安全的意思，这个需要使用phpinfo查看Thread Safety的值，为disabled时就是NTS。
+
+还有一个是Thread Safe（TS）线程安全，Thread Safety的值为enabled。
+
+当PHP作为一个web服务器的模块(比如apache的mod_php)时，它是支持同一进程多线程的，可以使用TS，因为它的线程是安全的，不会在分配的相同内存空间里搞混。当使用fastcgi管理进程时，一个进程同时只能有一个线程，就可以使用NTS模式。
+
+然后就是x64，一般还有x86，在windows下x86是可以支持32位和64位系统的，但是x64只能运行在64位系统中。不要以为你的系统是64位的，就一定是选x64。还是要使用phpinfo查看来进行选择。
+
+将php_redis.dll放到对应ext目录，然后修改php.ini添加 *extensions=php_redis.dll; *
+
+redis扩展安装好后，重启web服务器后生效。
+
+下面简单讲一下redis的使用。
+
+**一个小栗子**：
+
+```
+$redis = new Redis();
+//连接redis服务器127.0.0.1通过端口号6379 
+$redis->connect("127.0.0.1", 6379);
+//然后选择一个库，这里要注意下，redis数据库最大数量默认是16，而且数据库名必须是数字，起始是0，也就是只支持0-15，除非修改了设置中databases的值。 
+$redis->select(2);
+//auth设置密码，一般情况下是redis服务器是不设置密码的，因为只在内网访问，一旦对外开放的话，设置密码是很有必要的。 
+$redis->auth("");
+//通过setOption设置前缀，这样对于同一项目的不同模块使用同一个数据库时，很有用，不然容易key的设计重复引起冲突。 
+$redis->setOption(Redis::OPT_PREFIX, "prefix_");
+//使用set设置了key等于1，并且有效期为3600秒。这里的有效期一定要设置，因为不设置的话默认是不会失效的，除非主动去删除。还可以通过expire方法设置一个key的有效期。 
+$redis->set("key", "1", 3600);
+```
+
+redis有很多优点和应用场景，比如高并发的计数器，高频访问数据的缓存，队列的实现等等。
+
+留个作业吧？
+
+请结合使用incr生成一个唯一的字符串time()后加两位，要求每秒并发101，当前秒超过100个字符串后可以占用下一秒的位置，持续10秒即可。
+
+官方git地址<https://github.com/phpredis/phpredis>
+
+中文版手册<http://redisdoc.com/>
+
+redis各种类型使用场景http://redis-cookbook.readthedocs.io/en/latest/index.html
