@@ -23,7 +23,7 @@ url: "https://kongfanbing.github.io" # the base hostname & protocol for your sit
 #twitter_username: jekyllrb
 github_username:  kongfanbing
 logo:               'assets/img/water.jpg'
-background:         'assets/img/placeholder-big.jpg'
+background:         'assets/img/taiji.jpg'
 
 # Build settings
 markdown: kramdown
