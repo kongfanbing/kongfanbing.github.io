@@ -24,7 +24,8 @@ github_username:  kongfanbing
 
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-cayman
+#theme: jekyll-theme-cayman
+remote-theme: mmistakes/minimal-mistakes
 plugins:
   - jekyll-feed
 
