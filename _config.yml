@@ -24,7 +24,7 @@ github_username:  kongfanbing
 
 # Build settings
 markdown: kramdown
-theme: minima
+theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
 
@@ -39,3 +39,5 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+repository: kongfanbing/kongfanbing.github.io
