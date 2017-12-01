@@ -2,7 +2,7 @@
 layout: post
 title:  swoole初探
 date:   2017-11-30 17:00:00 +0800
-categories: php swoole websocket
+tags: [php,swoole,websocket]
 ---
 
 >   学而不思则罔，思而不学则殆。

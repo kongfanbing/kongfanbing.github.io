@@ -2,7 +2,7 @@
 layout: post
 title:  svn提交日志不能为空的配置
 date:   2016-08-02 11:44:00 +0800
-categories: svn
+tags: [svn]
 ---
 
 >  温故而知新，~~可以为师矣~~
