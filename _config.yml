@@ -24,7 +24,7 @@ github_username:  kongfanbing
 
 # Build settings
 markdown: kramdown
-theme: minimal
+theme: jekyll-theme-minimal
 remote_theme: pages-themes/minimal
 plugins:
   - jekyll-feed
