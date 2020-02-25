@@ -1,0 +1,102 @@
+---
+layout: post
+title:  hanlp安装备忘
+date:   2018-08-11
+tags: [自然语言处理，NLP，hanlp]
+---
+
+>   不积跬步，无以至千里；不积小流，无以成江海。
+>
+>   ——荀子
+
+# Windows环境下安装
+
+系统版本是Win10 64位，python版本3.6。根据官网http://hanlp.hankcs.com的安装页面进行操作。
+
+```shell
+pip isntall hanlp
+```
+
+报错信息如下：
+
+```shell
+building '_jpype' extension
+error: Microsoft Visual C++ 14.0 is required. Get it with "Microsoft Visual C++ Build Tools": http://landinghub.visualstudio.com/visual-cpp-build-tools
+```
+
+其实我本地是安装了C++ 14的，但依然会有这个报错。
+
+解决方案是打开https://www.lfd.uci.edu/~gohlke/pythonlibs/查找jpype，选择3.6版本64位的whl文件下载并安装：
+
+``` shell
+pip install c:\XXX\JPype1-0.6.3-cp36-cp36m-win_amd64.whl
+```
+
+windows此类安装python包的问题都可以通过这个方法解决，暂时还没查到引起这个问题的原因。
+
+这里只是安装了hanlp的安装器（我暂时这么叫···），然后执行hanlp命令进行自动安装：
+
+```
+hanlp
+```
+
+进入下载和安装的步骤，下载的包有大约560M。
+
+
+
+# Linux环境下安装
+
+系统版本是CentOS Linux release 7.4.1708 (Core)，python2.7。直接执行安装命令：
+
+```shell
+[root@bogon hanlp]# pip install pyhanlp
+```
+
+不出所料的会报错：
+
+```shell
+command 'gcc' failed with exit status 1
+```
+
+系统没有安装gcc，执行安装命令：
+
+```shell
+[root@bogon hanlp]# yum install gcc
+```
+
+继续执行安装，依然报错：
+
+```shell
+gcc: error trying to exec 'cc1plus': execvp: No such file or directory
+```
+
+需要安装gcc-c++，执行安装命令：
+
+```shell
+[root@bogon hanlp]# yum install gcc-c++
+```
+
+一切正常后，再继续执行安装hanlp的命令：
+
+```shell
+[root@bogon hanlp]# pip install pyhanlp
+```
+
+安装成功。
+
+下面就是使用hanlp这个命令自动安装hanlp包了：
+
+```shell
+[root@bogon hanlp]# hanlp
+```
+
+进入下载和安装。
+
+结果悲剧了，没有安装jdk。选择对应的jdk版本安装，我这里使用了1.8.0：
+
+```shell
+[root@bogon hanlp]# yum install java-1.8.0-openjdk
+```
+
+还好，安装jdk以后，再执行hanlp的命令一切正常（会重新下载和解压，500M，又得等）。
+
