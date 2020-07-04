@@ -2,7 +2,7 @@
 layout: post
 title:  rabbitmq安装备忘
 date:   2018-08-03
-tags: [消息队列，rabbitmq，erlang]
+tags: [消息队列,rabbitmq,erlang]
 ---
 
 >   不积跬步，无以至千里；不积小流，无以成江海。

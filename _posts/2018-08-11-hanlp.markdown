@@ -2,7 +2,7 @@
 layout: post
 title:  hanlp安装备忘
 date:   2018-08-11
-tags: [自然语言处理，NLP，hanlp]
+tags: [自然语言处理,NLP,hanlp]
 ---
 
 >   不积跬步，无以至千里；不积小流，无以成江海。
